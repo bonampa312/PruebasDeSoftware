@@ -1,18 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.udea.files;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -20,40 +20,46 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class ReadingFiles extends JFrame{
     
-    private JFileChooser chooser;
+   private static JFrame mainFrame;
     
-    public ReadingFiles(){
-        chooser = new JFileChooser();
-        chooser.setDialogTitle("Seleccione un archivo");
-        this.getContentPane().add(chooser);
-        chooser.setVisible(false);
-        
+    public ReadingFiles(){        
     }
-    public ArrayList readFloatsFile(String fileName) {
-        ArrayList lista = new ArrayList();
+    
+    public static ArrayList readFloatsFile() throws NumberFormatException, IOException {
+        ArrayList lista = null;
+        lista = readFileValues(",");
+        
         return lista;
     }
     
-    public FileInputStream openFile(String fileName){
-        FileInputStream file = null;
-        try {
-            file = new FileInputStream(fileName);
-        } catch (FileNotFoundException ex) {
-            /*
-            FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "JPG & GIF Images", "jpg", "gif");
-            chooser.setFileFilter(filter);
-            int returnVal = chooser.showOpenDialog(this);
-            if(returnVal == JFileChooser.APPROVE_OPTION) {
-                System.out.println("You chose to open this file: " +
-                chooser.getSelectedFile().getName());
-            }*/
-            JFrame frame = new FileChooser();
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-            frame.setVisible(true);                    
+    public static String getFilePath(){
+        String fileName = "";
+        JFileChooser  fileDialog = new JFileChooser();
+        int returnVal = fileDialog.showOpenDialog(mainFrame);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+               fileName = fileDialog.getSelectedFile().getAbsolutePath();
+        } else { 
+           fileName = "";
         }
-        return file;
+        return fileName;
+    }
+    
+    public static ArrayList readFileValues(String delimiter) throws  FileNotFoundException, IOException, NumberFormatException {
+        String filePath = getFilePath();
+        InputStream in = new FileInputStream(filePath);
+        String thisLine;
+        BufferedInputStream s = new BufferedInputStream(in);
+        BufferedReader myInput = new BufferedReader(new InputStreamReader(s));
+        
+        ArrayList values = new ArrayList();
+
+        while ((thisLine = myInput.readLine()) != null) {
+          StringTokenizer st = 
+               new StringTokenizer(thisLine, delimiter);
+          while(st.hasMoreElements())
+            values.add(Float.parseFloat(st.nextToken()));
+            }
+         return(values);
     }
     
 }

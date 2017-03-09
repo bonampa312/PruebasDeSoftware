@@ -1,9 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.udea.applicationonepds;
+
+import co.edu.udea.files.ReadingFiles;
+import java.util.ArrayList;
 
 /**
  *
@@ -11,11 +9,11 @@ package co.edu.udea.applicationonepds;
  */
 public class ApplicationOnePDS {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ArrayList list = ReadingFiles.readFloatsFile();
+        for (int i = 0; i<list.size(); i++) {
+            System.out.println("Item: "+list.get(i).toString());
+        }
     }
     
 }
