@@ -1,5 +1,8 @@
 import org.junit.Test;
 import co.edu.udea.files.*;
+import static co.edu.udea.files.ReadingFiles.readFileValues;
+import java.io.IOException;
+import java.util.ArrayList;
 import static org.junit.Assert.*;
 /**
  *
@@ -18,6 +21,13 @@ public class ReadFileTest {
         assertTrue(filePath != null);
     }
     
+    @Test
+    public void testReadFileValues() throws IOException{
+        ArrayList datos = new ArrayList();
+        datos = readFileValues(",");
+        assertTrue(datos != null);
+    }
+        
 //     Tests para readFileValues:
 //          -> filePath vacío
 //          -> archivo de formato raro
