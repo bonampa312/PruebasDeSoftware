@@ -62,5 +62,13 @@ public class ReadingFiles extends JFrame{
          return(values);
     }
     
+    public static double calcularMedia(ArrayList datos){
+        double suma = 0;
+        for (int i = 0; i < datos.size(); i++){
+            suma = suma + (double)datos.get(i);
+        }
+        return suma / datos.size();
+    }
+    
     
 }
